@@ -14,8 +14,8 @@
 
             Console.WriteLine("   Enter Your Current Text   \n");
             Console.Write(">>:");
-            string InitialUserInput = Console.ReadLine();
-            TextEditor myTextEditor = new TextEditor(InitialUserInput);
+            string initialUserInput = Console.ReadLine();
+            TextEditor myTextEditor = new TextEditor(initialUserInput);
 
 
             while (true)
@@ -34,7 +34,7 @@
                     #region Single Operation
 
                     Console.Clear();
-                    myTextEditor.SaveText();
+
                     // Getting User Input to Add and Constructing Append Class Instance
                     Console.WriteLine("You Selected to Add String to Current Text\nPlease Enter the Text\n");
                     string textToAdd = Console.ReadLine();
@@ -56,13 +56,13 @@
                     #region Single Operation
 
                     Console.Clear();
-                    myTextEditor.SaveText();
+
                     // Getting User Input to Add and Constructing Append Class Instance
                     Console.WriteLine("You Selected to Add String to Current Text\nPlease Enter the Text\n");
-                    Clear reset = new Clear();
+                    Clear clear = new Clear(myTextEditor.currentText);
 
                     // Calling Methods from TextEditor Class
-                    myTextEditor.ExecuteICommand(reset);
+                    myTextEditor.ExecuteICommand(clear);
                     myTextEditor.DisplayProcessed();
                     Console.WriteLine("\nPlease Press Any key to Continue....");
                     Console.ReadKey();
@@ -76,12 +76,12 @@
                     #region Single Operation
 
                     Console.Clear();
-                    myTextEditor.SaveText();
+
                     // Getting User Input to Add and Constructing Append Class Instance
                     Console.WriteLine(
                         "You Selected to Remove String to Current Text\nPlease Enter the number of text to remove\n");
                     string indexToRemove = Console.ReadLine();
-                    BackSpace toRemove = new BackSpace(Int32.Parse(indexToRemove));
+                    BackSpace toRemove = new BackSpace(Int32.Parse(indexToRemove), myTextEditor.currentText);
 
                     // Calling Methods from TextEditor Class
                     myTextEditor.ExecuteICommand(toRemove);
@@ -97,12 +97,11 @@
                 else if (Equals("4", userOption))
                 {
                     Console.Clear();
-
-                    myTextEditor.UndoText();
-                    myTextEditor.SaveText();
-
+                    myTextEditor.Undo();
                     Console.WriteLine("\nPlease Press Any key to Continue....");
                     Console.ReadKey();
+                    Console.Clear();
+                    myTextEditor.DisplayCurrentText();
                 }
 
                 else if (Equals("5", userOption))
@@ -111,6 +110,7 @@
                     Environment.Exit(0);
                 }
             }
+            // ReSharper disable once FunctionNeverReturns
         }
     }
 }

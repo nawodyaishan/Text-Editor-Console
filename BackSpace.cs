@@ -4,9 +4,12 @@ public class BackSpace : ICommand
 {
     private int toBeRemovedChars;
 
-    public BackSpace(int toBeRemovedChars)
+    private string OriginalString;
+
+    public BackSpace(int toBeRemovedChars, string originalString)
     {
         this.toBeRemovedChars = toBeRemovedChars;
+        this.OriginalString = originalString;
     }
 
     public string TextToExecute(string textToExecute)
@@ -18,7 +21,11 @@ public class BackSpace : ICommand
         else
         {
             return ($"Please enter a number below \n>>:{textToExecute.Length}");
-            
         }
+    }
+
+    public string TextToUndo(string textToUndo)
+    {
+        return OriginalString.Substring(0, textToUndo.Length + toBeRemovedChars);
     }
 }
